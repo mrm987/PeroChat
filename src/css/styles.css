@@ -268,7 +268,7 @@ body {
    Text Block
    ======================================== */
 .text-block {
-  min-height: 30vh;
+  min-height: 50vh;
   padding: 20px 30px;
   display: flex;
   flex-direction: column;
@@ -285,11 +285,11 @@ body {
 
 .text-block:first-child {
   opacity: 1; /* First block always visible */
-  margin-top: 35vh;
+  margin-top: 25vh;
 }
 
 .text-block:last-child {
-  margin-bottom: 35vh;
+  margin-bottom: 25vh;
 }
 
 /* Character Name */

@@ -136,45 +136,66 @@ function setupEventListeners() {
 // Scroll Observer (Block Detection)
 // ========================================
 function setupScrollObserver() {
-  const options = {
-    root: elements.textContainer,
-    rootMargin: '-40% 0px -40% 0px',
-    threshold: [0, 0.5, 1],
-  };
+  // Use scrollend event for character updates (only when scroll stops)
+  let scrollTimeout = null;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && entry.intersectionRatio >= CONFIG.scrollThreshold) {
-        const block = entry.target;
-        setActiveBlock(block);
-      }
-    });
-  }, options);
+  elements.textContainer.addEventListener('scroll', () => {
+    // Clear previous timeout
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
 
-  // Observe existing blocks
-  document.querySelectorAll('.text-block').forEach((block) => {
-    observer.observe(block);
+    // Update active block visually during scroll
+    updateActiveBlockVisual();
+
+    // Debounce character update - only update when scroll stops
+    scrollTimeout = setTimeout(() => {
+      updateCharacterForActiveBlock();
+    }, 150);
   });
 
-  // Store observer for later use
-  state.scrollObserver = observer;
+  // Also listen for scrollend if supported
+  elements.textContainer.addEventListener('scrollend', () => {
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    updateCharacterForActiveBlock();
+  });
 }
 
-function setActiveBlock(block) {
-  // Remove active class from all blocks
-  document.querySelectorAll('.text-block').forEach((b) => {
-    b.classList.remove('active');
+function updateActiveBlockVisual() {
+  const container = elements.textContainer;
+  const containerRect = container.getBoundingClientRect();
+  const centerY = containerRect.top + containerRect.height / 2;
+
+  let closestBlock = null;
+  let closestDistance = Infinity;
+
+  document.querySelectorAll('.text-block').forEach((block) => {
+    const blockRect = block.getBoundingClientRect();
+    const blockCenterY = blockRect.top + blockRect.height / 2;
+    const distance = Math.abs(centerY - blockCenterY);
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestBlock = block;
+    }
+
+    block.classList.remove('active');
   });
 
-  // Add active class to current block
-  block.classList.add('active');
+  if (closestBlock) {
+    closestBlock.classList.add('active');
+    state.activeBlockIndex = parseInt(closestBlock.dataset.index, 10);
+  }
+}
 
-  // Get block index
-  const index = parseInt(block.dataset.index, 10);
-  state.activeBlockIndex = index;
+function updateCharacterForActiveBlock() {
+  const activeBlock = document.querySelector('.text-block.active');
+  if (!activeBlock) return;
 
   // Update character display based on block data
-  const characters = block.dataset.characters;
+  const characters = activeBlock.dataset.characters;
   if (characters) {
     const charList = characters.split(',').map((c) => c.trim());
     updateCharacterDisplay(charList);
@@ -184,7 +205,7 @@ function setActiveBlock(block) {
   }
 
   // Check for event trigger
-  const eventType = block.dataset.event;
+  const eventType = activeBlock.dataset.event;
   if (eventType && state.currentMode !== 'event') {
     enterEventMode(eventType);
   }
@@ -362,7 +383,6 @@ function renderBlocks(parsedBlocks, mood = 'default') {
   blocks.forEach((block, index) => {
     const blockEl = createBlockElement(block, state.blocks.length + index, events[0]);
     elements.textContainer.appendChild(blockEl);
-    state.scrollObserver.observe(blockEl);
     state.blocks.push(block);
   });
 
