@@ -268,8 +268,10 @@ body {
    Text Block
    ======================================== */
 .text-block {
-  min-height: 60vh;
-  padding: 40px 30px;
+  min-height: auto;
+  max-height: 40vh;
+  padding: 20px 30px;
+  margin: 10px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -285,11 +287,11 @@ body {
 
 .text-block:first-child {
   opacity: 1; /* First block always visible */
-  padding-top: 20vh;
+  margin-top: 20vh;
 }
 
 .text-block:last-child {
-  padding-bottom: 20vh;
+  margin-bottom: 20vh;
 }
 
 /* Character Name */
