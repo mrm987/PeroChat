@@ -268,16 +268,14 @@ body {
    Text Block
    ======================================== */
 .text-block {
-  min-height: auto;
-  max-height: 40vh;
+  min-height: 30vh;
   padding: 20px 30px;
-  margin: 10px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   scroll-snap-align: center;
   scroll-snap-stop: always;
-  opacity: 0.7;
+  opacity: 0.5;
   transition: opacity var(--transition-fast);
 }
 
@@ -287,11 +285,11 @@ body {
 
 .text-block:first-child {
   opacity: 1; /* First block always visible */
-  margin-top: 20vh;
+  margin-top: 35vh;
 }
 
 .text-block:last-child {
-  margin-bottom: 20vh;
+  margin-bottom: 35vh;
 }
 
 /* Character Name */
