@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PeroChat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Press+Start+2P&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="game-container">
+    <!-- Header -->
+    <header class="ui-header">
+      <div class="header-left">
+        <span class="status-icon">&#9829;</span>
+        <span class="status-text">MENTAL: <span id="mental-status">UNSTABLE</span></span>
+      </div>
+      <div class="header-center">
+        <span class="title-text">PeroChat</span>
+      </div>
+      <div class="header-right">
+        <span class="rec-indicator">REC</span>
+        <span class="rec-dot">&#9679;</span>
+        <span class="time" id="current-time">00:00</span>
+      </div>
+    </header>
+
+    <!-- Main Stage -->
+    <main class="main-stage normal-mode" id="main-stage">
+      <!-- Visual Layer (Character + Background) -->
+      <div class="visual-layer" id="visual-layer">
+        <div class="bg-container">
+          <div class="bg-overlay"></div>
+          <div class="scanline-overlay"></div>
+        </div>
+        <div class="character-container" id="character-container">
+          <!-- Character images will be dynamically inserted -->
+        </div>
+      </div>
+
+      <!-- Text Layer -->
+      <div class="text-layer" id="text-layer">
+        <div class="text-container" id="text-container">
+          <!-- Text blocks will be dynamically inserted -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="ui-footer">
+      <div class="input-container">
+        <span class="prompt">&gt;_</span>
+        <input
+          type="text"
+          id="user-input"
+          placeholder="메시지를 입력하세요..."
+          autocomplete="off"
+        />
+        <button class="btn-send" id="btn-send">SEND</button>
+      </div>
+      <div class="suggestions" id="suggestions">
+        <!-- Optional suggestion buttons -->
+      </div>
+    </footer>
+
+    <!-- Event Mode Overlay (hidden by default) -->
+    <div class="event-overlay" id="event-overlay"></div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
