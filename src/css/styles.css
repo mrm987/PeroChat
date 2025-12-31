@@ -243,20 +243,20 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none;
 
-  /* Mask for fade effect */
+  /* Mask for fade effect - subtle fade at edges */
   mask-image: linear-gradient(
     to bottom,
-    transparent 0%,
-    black 25%,
-    black 75%,
-    transparent 100%
+    rgba(0,0,0,0.3) 0%,
+    black 10%,
+    black 90%,
+    rgba(0,0,0,0.3) 100%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
-    transparent 0%,
-    black 25%,
-    black 75%,
-    transparent 100%
+    rgba(0,0,0,0.3) 0%,
+    black 10%,
+    black 90%,
+    rgba(0,0,0,0.3) 100%
   );
 }
 
@@ -275,7 +275,7 @@ body {
   justify-content: center;
   scroll-snap-align: center;
   scroll-snap-stop: always;
-  opacity: 0.4;
+  opacity: 0.7;
   transition: opacity var(--transition-fast);
 }
 
@@ -284,6 +284,7 @@ body {
 }
 
 .text-block:first-child {
+  opacity: 1; /* First block always visible */
   padding-top: 20vh;
 }
 

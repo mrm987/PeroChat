@@ -655,10 +655,18 @@ function loadDemoContent() {
   const parsed = parseResponse(demoText);
   renderBlocks(parsed);
 
-  // Show initial suggestions
+  // Activate first block and show initial character
   setTimeout(() => {
+    const firstBlock = elements.textContainer.querySelector('.text-block');
+    if (firstBlock) {
+      firstBlock.classList.add('active');
+      const characters = firstBlock.dataset.characters;
+      if (characters) {
+        updateCharacterDisplay(characters.split(','));
+      }
+    }
     showSuggestions(['안녕', '뭐 해?', '보고 싶었어']);
-  }, 500);
+  }, 100);
 }
 
 // ========================================
